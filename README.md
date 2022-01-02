@@ -1,3 +1,3 @@
 # favorite-pokemon
 
-In this applications, users can select their favorite pokemon.
+In this application, users can select their favorite pokemon.
