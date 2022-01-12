@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
+import "bulma/css/bulma.css";
 import Navbar from "./components/Navbar";
 import Searchbar from "./components/Searchbar";
 import Pokedex from "./components/Pokedex";
 import { getPokemonData, getPokemons, searchPokemon } from "./api/api";
 import { FavoriteProvider } from "./contexts/FavoriteContext";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import { UserContext } from "./contexts/UserContext";
 import Footer from "./components/Footer";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -18,6 +22,7 @@ export default function App() {
   const [favorites, setFavorites] = useState([]);
   const [notFound, setNotFound] = useState(false);
   const [searching, setSearching] = useState(false);
+  const [token] = useContext(UserContext);
 
   const fetchPokemons = async () => {
     try {
@@ -92,6 +97,17 @@ export default function App() {
     >
       <div><Router>
         <Navbar/>
+        {!token ? (
+            <div className="columns">
+              <div className="column"></div>
+                <div className="column m-5 is-two-thirds">
+                <div className="columns">
+                <Register /> <Login />
+                </div>
+              </div>
+              <div className="column"></div>
+            </div>
+        ) : (
         <div className="App">
           <Searchbar onSearch={onSearch} />
           {notFound ? (
@@ -112,6 +128,7 @@ export default function App() {
             </Switch>
           )}
         </div>
+        )}
         <Footer/>
       </Router></div>
     </FavoriteProvider>
